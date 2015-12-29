@@ -15,13 +15,7 @@ public interface PersonService {
      * @return list of person records
      */
     List<Person> listPeople();
-
-    /**
-     * Creates a new person record.
-     *
-     * @param person the values to save
-     * @return the new person ID
-     */
+    
     Integer createPerson(Person person);
 
     /**
@@ -30,6 +24,7 @@ public interface PersonService {
      * @param id the person ID
      * @return the person record
      */
+    
     Person readPerson(Integer id);
 
     /**
@@ -53,4 +48,21 @@ public interface PersonService {
      * @return list of error messages
      */
     List<String> validatePerson(Person person);
+
+	void addClientToPerson(Integer personId, Integer clientToAdd);
+    
+    /**
+     * 
+     * @param personId
+     * @param clientId
+     * makes the the client id a client of the person id
+     */
+
+	List<Person> listPossiblePeople(Integer clientId); 
+	
+	List<Person> listAClientsPeople(Integer clientId);
+
+	
+
+
 }

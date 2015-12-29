@@ -14,13 +14,14 @@ public interface PersonDao {
      * @return list of person records
      */
     List<Person> listPeople();
-
+    
     /**
-     * Creates a new person record.
-     *
-     * @param person the values to save
-     * @return the new person ID
+     *     
+     * @param personId
+     * @return returns the clients that are not could possible be clients
+     * 
      */
+
     Integer createPerson(Person person);
 
     /**
@@ -44,4 +45,11 @@ public interface PersonDao {
      * @param id the person ID
      */
     void deletePerson(Integer id);
+    
+    void addClientToPerson(Integer id, Integer clientToAdd);
+
+	List<Person> listPossiblePeople(Integer clientId);
+
+	List<Person> listAClientsPeople(Integer clientId);
+
 }

@@ -3,7 +3,9 @@ package com.aquent.crudapp.data.dao.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -27,9 +29,12 @@ public class PersonJdbcDao implements PersonDao {
     private static final String SQL_UPDATE_PERSON = "UPDATE person SET (first_name, last_name, email_address, street_address, city, state, zip_code)"
                                                   + " = (:firstName, :lastName, :emailAddress, :streetAddress, :city, :state, :zipCode)"
                                                   + " WHERE person_id = :personId";
-    private static final String SQL_CREATE_PERSON = "INSERT INTO person (first_name, last_name, email_address, street_address, city, state, zip_code)"
+    private static final String SQL_CREATE_PERSON = "INSERT INTO person (first_name, last_name, email_address, street_address, city, state, zip_code, phone_number, uri)"
                                                   + " VALUES (:firstName, :lastName, :emailAddress, :streetAddress, :city, :state, :zipCode)";
-
+	private static final String SQL_ADD_CLIENT_TO_PERSON = "Insert into associations (person_id, client_id) values(:personId, :clientToAdd)";
+    private static final String SQL_LIST_POSSIBLE_PEOPLE = 	"Select p.* from person p where p.person_id not in (select person_id from associations where client_id = :clientId) ";
+	private static final String SQL_LIST_CLIENTS_PEOPEL = "Select p.* from person p join associations a on p.person_id = a.person_id where a.client_id = :clientId";
+   
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -41,6 +46,7 @@ public class PersonJdbcDao implements PersonDao {
     public List<Person> listPeople() {
         return namedParameterJdbcTemplate.getJdbcOperations().query(SQL_LIST_PEOPLE, new PersonRowMapper());
     }
+    
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -67,7 +73,28 @@ public class PersonJdbcDao implements PersonDao {
         namedParameterJdbcTemplate.update(SQL_CREATE_PERSON, new BeanPropertySqlParameterSource(person), keyHolder);
         return keyHolder.getKey().intValue();
     }
-
+    
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+    public void addClientToPerson(Integer personId, Integer clientToAdd){
+    	
+    	Map params = new HashMap<String, Integer>();
+    	params.put("personId", personId);
+    	params.put("clientToAdd", clientToAdd);
+    	
+    	namedParameterJdbcTemplate.update(SQL_ADD_CLIENT_TO_PERSON, params);	
+    }
+    
+    public List<Person> listPossiblePeople(Integer clientId){
+    	return namedParameterJdbcTemplate.query(SQL_LIST_POSSIBLE_PEOPLE, Collections.singletonMap("clientId", clientId), new PersonRowMapper());
+    }
+    
+	@Override
+	public List<Person> listAClientsPeople(Integer clientId) {
+		
+		return namedParameterJdbcTemplate.query(SQL_LIST_CLIENTS_PEOPEL, Collections.singletonMap("clientId", clientId), new PersonRowMapper());
+	}
+    
     /**
      * Row mapper for person records.
      */
@@ -87,4 +114,6 @@ public class PersonJdbcDao implements PersonDao {
             return person;
         }
     }
+
+
 }

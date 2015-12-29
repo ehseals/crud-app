@@ -35,7 +35,8 @@ public class DefaultPersonService implements PersonService {
     public List<Person> listPeople() {
         return personDao.listPeople();
     }
-
+   
+    
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public Person readPerson(Integer id) {
@@ -59,6 +60,7 @@ public class DefaultPersonService implements PersonService {
     public void deletePerson(Integer id) {
         personDao.deletePerson(id);
     }
+    
 
     @Override
     public List<String> validatePerson(Person person) {
@@ -69,5 +71,20 @@ public class DefaultPersonService implements PersonService {
         }
         Collections.sort(errors);
         return errors;
+    }
+    
+    @Override
+    public void addClientToPerson(Integer personId, Integer clientToAdd){
+    	personDao.addClientToPerson(personId, clientToAdd);
+    }
+    
+    @Override
+    public List<Person> listPossiblePeople(Integer clientId){
+    	return personDao.listPossiblePeople(clientId);
+    }
+    
+    @Override
+    public List<Person> listAClientsPeople(Integer clientId){
+    	return personDao.listAClientsPeople(clientId);
     }
 }

@@ -1,7 +1,7 @@
 <%-- 
     Document   : create
-    Created on : Apr 22, 2011, 3:24:13 PM
-    Author     : FMilens
+    Created on : 12 28, 2015, 3:24:13 PM
+    Author     : Trey Seals - Inspired by: FMilens
 --%>
 
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
@@ -13,10 +13,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create Person</title>
+        <title>Create Client</title>
     </head>
     <body>
-        <h1>Create Person</h1>
+        <h1>Create Client</h1>
         <c:if test="${fn:length(errors) gt 0}">
             <p>Please correct the following errors in your submission:</p>
             <ul>
@@ -25,28 +25,28 @@
                 </c:forEach>
             </ul>
         </c:if>
-        <form action="${pageContext.request.contextPath}/person/create" method="POST">
+        <form action="${pageContext.request.contextPath}/client/create" method="POST">
             <br/>
-            <label for="firstName">First Name:</label>
-            <input type="text" name="firstName" value="${person.firstName}"/>
-            <br/>
-            <label for="lastName">Last Name:</label>
-            <input type="text" name="lastName" value="${person.lastName}"/>
-            <br/>
-            <label for="emailAddress">Email Address:</label>
-            <input type="text" name="emailAddress" value="${person.emailAddress}"/>
+            <label for="name">Name:</label>
+            <input type="text" name="name" value="${client.name}"/>
             <br/>
             <label for="streetAddress">Street Address:</label>
-            <input type="text" name="streatAddress" value="${person.streetAddress}"/>
+            <input type="text" name="streetAddress" value="${client.streetAddress}"/>
             <br/>
             <label for="city">City:</label>
-            <input type="text" name="city" value="${person.city}"/>
+            <input type="text" name="city" value="${client.city}"/>
             <br/>
             <label for="state">State:</label>
-            <input type="text" name="state" value="${person.state}"/>
+            <input type="text" name="state" value="${client.state}"/>
             <br/>
             <label for="zipCode">Zip Code:</label>
-            <input type="text" name="zipCode" value="${person.zipCode}"/>
+            <input type="text" name="zipCode" value="${client.zipCode}"/>
+            <br/>
+             <label for="zipCode">Phone Number:</label>
+            <input type="text" name="phoneNumber" value="${client.phoneNumber}"/>
+            <br/>
+            <label for="uri">URI:</label>
+            <input type="text" name="uri" value="${client.uri}"/>
             <br/>
             <input type="submit" name="Submit" value="Submit"/>
         </form>

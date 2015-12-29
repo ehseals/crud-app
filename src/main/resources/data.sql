@@ -23,3 +23,35 @@ INSERT INTO person (
     'NC',
     '28801'
 );
+
+
+
+Insert into client(
+	name,
+    street_address,
+    city ,
+    state ,
+    zip_code , 
+    phone_number ,
+    uri 
+)values(
+	'Some Store',
+	'123 Some Street',
+	'Asheville',
+	'Nc',
+	'28801',
+	'1111111111',
+	'www.someAddress.com'
+)
+
+
+
+INSERT INTO associations(
+	person_id, 
+	client_id
+)values(
+	1,
+	2
+	
+
+)

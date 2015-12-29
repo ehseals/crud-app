@@ -51,5 +51,23 @@
             <br/>
             <input type="submit" name="Submit" value="Submit"/>
         </form>
+        <br>
+        <h1>Clients:</h1>
+        <c:forEach items="${clients}" var="client">
+                    <li>${client.name}</li>
+                </c:forEach>
+                
+      Add a new Client:
+      
+      <form action="${pageContext.request.contextPath}/person/addClient/${person.personId}"  method="POST">
+      <select name="clientToAdd">
+      	<c:forEach items="${possibleClients}" var="possibleClient">
+              <option value= "${possibleClient.clientId}">  ${possibleClient.name}</option>
+        </c:forEach>
+      </select>
+      <br/>
+      <input type="submit" name="Submit" value="Add Client"/>
+      </form>
+        
     </body>
 </html>
